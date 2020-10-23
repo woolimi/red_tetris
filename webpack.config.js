@@ -7,6 +7,7 @@ const outputDirectory = 'dist';
 module.exports = {
 	name: 'red-tetris',
 	mode: 'development', // production
+	devtool: 'eval',
 	resolve: {
 		extensions: ['*', '.js', '.jsx']
 	},

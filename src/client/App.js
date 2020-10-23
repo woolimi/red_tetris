@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import './app.css';
+import io from 'socket.io-client';
 
-export default class App extends Component {
-	render() {
-		return (
-			<div>
-				hello
-			</div>
-		);
-	}
+const App = () => {
+	const ENDPOINT = 'http://localhost:5000';
+	useEffect(() => {
+		const socket = io(ENDPOINT, { transports: ['websocket'] });
+	}, []);
+	return (
+		<div>
+			hello
+		</div>
+	);
 }
+
+export default App;
