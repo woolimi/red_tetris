@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
-import './app.css';
-import io from 'socket.io-client';
+import React from 'react';
+import { HashRouter, Switch, Route, Link } from "react-router-dom";
+import Home from './pages/Home'
+import Room from './pages/Room'
 
 const App = () => {
-	const ENDPOINT = 'http://localhost:5000';
-	useEffect(() => {
-		const socket = io(ENDPOINT, { transports: ['websocket'] });
-	}, []);
 	return (
-		<div>
-			hello
-		</div>
+		<HashRouter hashType="noslash">
+			<Route path="/" exact component={Home}/>
+			<Route path="/:room[:playerName]" component={Room} />
+		</HashRouter>
 	);
 }
 

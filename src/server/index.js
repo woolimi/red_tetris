@@ -8,10 +8,9 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-	// console.dir(socket, { depth: 1 });
 	console.log(`client "${socket.id}" connected`);
 	socket.on('disconnect', () => {
-		console.log('user disconnected');
+		console.log(`user ${socket.id} disconnected`);
 	});
 })
 
