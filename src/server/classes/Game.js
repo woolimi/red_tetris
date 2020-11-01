@@ -36,12 +36,18 @@ class Game {
 			return {
 				id: p[1].id,
 				name: p[1].name,
+				stage: p[1].stage,
+				isReady: p[1].isReady,
 			};
 		});
 	}
 
 	removePlayerById(playerId) {
 		this.players.delete(playerId);
+	}
+
+	setPlayerReady(playerId) {
+		this.players.get(playerId).isReady = true;
 	}
 
 	setStarted(isStarted) {

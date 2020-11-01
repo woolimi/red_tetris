@@ -7,9 +7,8 @@ const StyledStage = styled.div`
 	grid-template-columns: repeat(10, 1fr);
 	grid-gap: 1px;
 	border: 2px solid #333;
-	width: calc(90vh / 2 * ${(props) => props.scale});
-	height: calc(90vh * ${(props) => props.scale});
-	max-height: 500px;
+	width: calc(85vh / 2 * ${(props) => props.scale});
+	height: calc(85vh * ${(props) => props.scale});
 	background: #111;
 `;
 

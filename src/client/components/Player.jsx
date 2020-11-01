@@ -2,65 +2,38 @@ import React, { useState, useEffect, useCallback } from "react";
 import Stage from "./Stage";
 import NextBlock from "./NextBlock";
 import styled from "styled-components";
-import { Grid, Card, Icon, Button } from "semantic-ui-react";
-import { WIDTH, HEIGHT } from "../../constants";
-import io from "socket.io-client";
-import { SOCKET_ADDR } from "../../constants";
+import { Icon } from "semantic-ui-react";
 
-const PlayerWrapper = styled.div`
-	margin: 1em;
-	padding: 0;
-	display: flex;
+const CenterDiv = styled.div`
 	text-align: center;
+	margin: 1em;
+	position: relative;
 `;
 
-const initStage = () => {
-	return new Array(HEIGHT).fill(new Array(WIDTH).fill(0));
-};
+const Ready = styled.div`
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	font-size: 20px;
+	transform: translateX(-50%) translateY(-50%);
+`;
 
-const Player = ({ player, scale = 0.4, isMe = false, owner }) => {
-	const [stage, setStage] = useState(initStage());
-	const [isReady, setisReady] = useState(false);
-	const [pos, setPos] = useState({ x: 0, y: 0 });
-
-	const manageSocket = useCallback(() => {
-		const socket = io.connect(`${SOCKET_ADDR}/game`, {
-			path: "/socket",
-			transports: ["websocket"],
-		});
-		return socket;
-	}, [player.id]);
-
-	useEffect(() => {
-		let socket = null;
-		const init = async () => {
-			socket = manageSocket();
-		};
-		init();
-		return () => {
-			if (socket) socket.close();
-		};
-	}, [player.id]);
+const Player = ({ player, scale = 0.4, owner }) => {
+	const emptyStage = useCallback(() => {
+		new Array(10).fill(new Array(20).fill(0));
+	}, []);
 
 	return (
-		<PlayerWrapper>
-			<div>
-				{player.id === owner && <Icon color="red" name="star"></Icon>}
-				<span>{player.name}</span>
-				<Stage stage={stage} scale={scale} />
-			</div>
-			<div>
-				{isMe && <NextBlock />}
-				{isMe &&
-					(player.id === owner ? (
-						<Button color="red">Start</Button>
-					) : (
-						<Button color="blue" disabled={isReady}>
-							Ready
-						</Button>
-					))}
-			</div>
-		</PlayerWrapper>
+		<CenterDiv>
+			{owner === player.id && <Icon color="red" name="star"></Icon>}
+			<span>{player ? player.name : ""}</span>
+			<Stage stage={player ? player.stage : emptyStage()} scale={scale} />
+			{!owner
+				? null
+				: owner !== player.id && (
+						<Ready>{player.isReady ? "ready" : "notReady"}</Ready>
+				  )}
+		</CenterDiv>
 	);
 };
 

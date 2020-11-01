@@ -17,38 +17,43 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api", apiRouter);
 
-const ioRoom = io.of("/room");
-const ioGame = io.of("/game");
+io.on("connection", (socket) => {
+	console.log(`connection "${socket.id}" connected`);
 
-ioRoom.on("connection", (socket) => {
-	console.log(`room:connection "${socket.id}" connected`);
+	socket.on("player:ready", () => {
+		const roomName = Object.keys(socket.rooms)[0];
+		const game = ROOMS.get(roomName);
 
-	socket.on("addPlayer", ({ roomName, userName }) => {
-		console.log("room:addPlayer");
+		game.setPlayerReady(socket.client.id);
+		io.to(roomName).emit("player:ready", {
+			id: socket.client.id,
+		});
+	});
+
+	socket.on("player:add", ({ roomName, userName }) => {
+		console.log("player:add");
 
 		const game = ROOMS.get(roomName);
 		if (!game) return;
 
 		const player = new Player(socket.client.id, userName);
 
-		// Creator is owner of room.
 		if (game.players.size === 0) game.owner = player.id;
 
 		socket.join(roomName);
 		game.addPlayer(player);
-
-		ioRoom.to(roomName).emit("players", {
+		io.to(roomName).emit("player:players", {
 			players: game.getPlayers(),
 		});
-		ioRoom.to(roomName).emit("setOwner", {
+
+		io.to(roomName).emit("player:owner", {
 			owner: game.owner,
 		});
-
 		console.log("ROOMS", ROOMS);
 	});
 
 	socket.on("disconnecting", () => {
-		console.log("room:removePlayer");
+		console.log(`disconnecting ${socket.client.id}`);
 		const roomName = Object.keys(socket.rooms)[0];
 		const game = ROOMS.get(roomName);
 
@@ -60,25 +65,20 @@ ioRoom.on("connection", (socket) => {
 		if (game.players.size === 0) {
 			ROOMS.delete(roomName);
 			console.log("room:destroyRoom");
-		} else if (game.owner === socket.client.id) {
-			const successor = game.players.keys().next().value;
-			game.owner = successor;
-			ioRoom.to(roomName).emit("players", {
+		} else {
+			io.to(roomName).emit("player:players", {
 				players: game.getPlayers(),
 			});
-			ioRoom.to(roomName).emit("setOwner", {
-				owner: game.owner,
-			});
+			if (game.owner === socket.client.id) {
+				const successor = game.players.keys().next().value;
+				game.owner = successor;
+				io.to(roomName).emit("player:owner", {
+					owner: game.owner,
+				});
+			}
 		}
+
 		console.log("ROOMS", ROOMS);
-	});
-});
-
-ioGame.on("connection", (socket) => {
-	console.log(`game:connection "${socket.id}" connected`);
-
-	socket.on("disconnect", () => {
-		console.log(`game:disconnect "${socket.id}" disconnected`);
 	});
 });
 

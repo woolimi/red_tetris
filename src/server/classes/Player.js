@@ -1,12 +1,11 @@
-const Stage = require("./Stage");
-
 class Player {
-	constructor(id, name, isOwner = false) {
+	constructor(id, name) {
 		this.id = id;
 		this.name = name;
 		this.pieces = []; // Map(Pieces)
-		this.stage = new Stage();
+		this.stage = new Array(10).fill(new Array(20).fill(0));
 		this.score = 0;
+		this.isReady = false;
 	}
 
 	addPiece(newPiece) {
