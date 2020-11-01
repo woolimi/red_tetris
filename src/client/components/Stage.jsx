@@ -12,13 +12,16 @@ const StyledStage = styled.div`
 	background: #111;
 `;
 
-const Stage = ({ stage, scale }) => {
+const Stage = ({ screen, scale }) => {
 	return (
 		<StyledStage scale={scale}>
-			{stage &&
-				stage.map((row) => row.map((cell, x) => <Cell key={x} type={cell} />))}
+			{screen &&
+				screen.map((row, y) => {
+					if (y === 0) return null;
+					return row.map((cell, x) => <Cell key={x} type={cell} />);
+				})}
 		</StyledStage>
 	);
 };
 
-export default Stage;
+export default React.memo(Stage);

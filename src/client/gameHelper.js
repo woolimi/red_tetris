@@ -1,6 +1,17 @@
-export const SOCKET_ADDR = "http://localhost:5000";
+import _ from "lodash";
+
+export const SERVER = "http://localhost:5000";
 export const WIDTH = 10;
 export const HEIGHT = 20;
+
+const H = {};
+
+H.newStage = () => {
+	return Array.from(Array(20 + 1), () => new Array(10).fill(0));
+};
+
+export default H;
+
 export const TETROMINOS = {
 	0: {
 		matrix: [0],
@@ -25,11 +36,11 @@ export const TETROMINOS = {
 	},
 	L: {
 		matrix: [
-			[0, 0, "J"],
-			["J", "J", "J"],
+			[0, 0, "L"],
+			["L", "L", "L"],
 			[0, 0, 0],
 		],
-		color: "223, z73, 36",
+		color: "223, 173, 36",
 	},
 	O: {
 		matrix: [

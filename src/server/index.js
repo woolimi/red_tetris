@@ -1,5 +1,7 @@
 const { ROOMS } = require("./Rooms");
+const H = require("./gameHelper");
 const Player = require("./classes/Player");
+
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
@@ -7,6 +9,7 @@ const io = require("socket.io")(server, { path: "/socket" });
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const apiRouter = require("./api");
+
 const corsOptions = {
 	origin: "http://localhost:8080",
 };
@@ -20,10 +23,42 @@ app.use("/api", apiRouter);
 io.on("connection", (socket) => {
 	console.log(`connection "${socket.id}" connected`);
 
-	socket.on("player:ready", () => {
-		const roomName = Object.keys(socket.rooms)[0];
+	//GAME EVENT
+	socket.on("game:start", ({ roomName }) => {
 		const game = ROOMS.get(roomName);
+		game.initGamePieces();
+		game.initPlayersPieces();
+		game.initPlayersScreens();
+		io.to(roomName).emit("game:start", {
+			players: game.getPlayers(),
+		});
+	});
+	socket.on("game:move", ({ dir, roomName }) => {
+		const game = ROOMS.get(roomName);
+		const player = game.findPlayerById(socket.client.id);
+		if (!player.move(dir)) return;
+		player.screen = H.drawScreen(player);
+		io.to(roomName).emit("game:move", {
+			id: socket.client.id,
+			screen: player.screen,
+		});
+	});
+	socket.on("game:down", ({ roomName }) => {
+		const game = ROOMS.get(roomName);
+		const player = game.findPlayerById(socket.client.id);
+		player.down();
+		player.screen = H.drawScreen(player);
+		const data = {
+			id: socket.client.id,
+			screen: player.screen,
+			nextPiece: player.nextPiece,
+		};
+		io.to(roomName).emit("game:down", data);
+	});
 
+	// ROOM EVENT
+	socket.on("player:ready", ({ roomName }) => {
+		const game = ROOMS.get(roomName);
 		game.setPlayerReady(socket.client.id);
 		io.to(roomName).emit("player:ready", {
 			id: socket.client.id,

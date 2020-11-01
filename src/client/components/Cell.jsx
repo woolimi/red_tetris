@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TETROMINOS } from "../../constants";
+import { TETROMINOS } from "../gameHelper";
 
 const StyledCell = styled.div`
 	width: auto;

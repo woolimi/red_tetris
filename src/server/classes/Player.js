@@ -1,30 +1,86 @@
+const H = require("../gameHelper");
+const Piece = require("./Piece");
+const Game = require("./Game");
+
 class Player {
 	constructor(id, name) {
 		this.id = id;
 		this.name = name;
-		this.pieces = []; // Map(Pieces)
-		this.stage = new Array(10).fill(new Array(20).fill(0));
+		this.pieceIdx = 0;
+		this.stage = H.newStage();
+		this.screen = H.newStage();
 		this.score = 0;
 		this.isReady = false;
+		this.isGameOver = false;
+		this.pos = { x: 0, y: 0 };
+		this.piece = [0];
+		this.nextPiece = "";
 	}
 
-	addPiece(newPiece) {
-		this.pieces.push(newPiece);
+	setPos(x, y) {
+		this.pos.x = x;
+		this.pos.y = y;
 	}
 
-	getPiece() {
-		if (this.pieces[0]) return this.pieces[0];
-		else throw new Error("getPiece() : No piece");
+	move(dir) {
+		this.pos.x += dir;
+		if (H.collide(this)) {
+			this.pos.x -= dir;
+			return false;
+		}
+		return true;
 	}
 
-	getNextPiece() {
-		if (this.pieces[1]) return this.pieces[1];
-		else throw new Error("getNextPiece() : No next piece");
+	down() {
+		this.pos.y++;
+		if (H.collide(this)) {
+			this.pos.y--;
+			this.merge();
+			this.reset();
+			this.score += this.sweep();
+			return true;
+		}
+		return false;
+	}
+	// piece to stage
+	merge() {
+		this.piece.forEach((row, y) => {
+			row.forEach((val, x) => {
+				if (val !== 0) {
+					this.stage[y + this.pos.y][x + this.pos.x] = val;
+				}
+			});
+		});
 	}
 
-	removePiece() {
-		if (!this.pieces.unshift())
-			throw new Error("removePiece() : No piece to remove");
+	// remove prev piece => add new piece
+	// reset player pos
+	reset() {
+		this.pieceIdx = (this.pieceIdx + 1) % 100;
+		this.piece = Piece.TETROMINOS[Game.pieceList[this.pieceIdx]];
+		this.nextPiece = Game.pieceList[this.pieceIdx];
+		const initOffset = this.piece.length === 4 ? 5 : 4;
+		this.pos.x = initOffset - ((this.piece.length / 2) | 0);
+		this.pos.y = 0;
+	}
+
+	// remove filled line and return score
+	sweep() {
+		let rowCount = 1;
+		let score = 0;
+		outer: for (let y = this.stage.length - 1; y > 0; --y) {
+			for (let x = 0; x < this.stage[y].length; ++x) {
+				if (this.stage[y][x] === 0) {
+					continue outer;
+				}
+			}
+			const row = this.stage.splice(y, 1)[0].fill(0);
+			this.stage.unshift(row);
+			++y;
+			score += rowCount * 10;
+			rowCount *= 2;
+		}
+		return score;
 	}
 }
 

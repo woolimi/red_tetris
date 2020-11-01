@@ -1,34 +1,43 @@
 import React, { createContext, useReducer, useContext } from "react";
+import H, { HEIGHT, WIDTH } from "../gameHelper";
 
-const defaultState = {
-	me: {
-		name: "",
-		stage: new Array(10).fill(new Array(20).fill(0)),
-		pieces: [],
-	},
-	others: [],
-};
+const defaultState = {};
+// id: { id, name, screen, nextPiece, isReady }
 
 const PlayersDispatchContext = createContext(null);
 const PlayersStoreContext = createContext(null);
 
-function reducer({ me, others }, action) {
+function reducer(players, action) {
 	switch (action.type) {
-		case "FETCH_ALL":
+		case "ROOM_FETCH_PLAYERS":
+			return action.players;
+		case "ROOM_READY":
 			return {
-				me: action.players.find((p) => p.id === action.id),
-				others: action.players.filter((p) => p.id !== action.id),
+				...players,
+				[action.id]: {
+					...players[action.id],
+					isReady: true,
+				},
 			};
-		case "READY":
-			if (me.id === action.id) me.isReady = true;
-			else {
-				others.forEach((p) => {
-					if (p.id === action.id) p.isReady = true;
-				});
-			}
+		case "GAME_START":
+			return action.players;
+
+		case "PLAYER_LR_MOVE":
 			return {
-				me,
-				others,
+				...players,
+				[action.id]: {
+					...players[action.id],
+					screen: action.screen,
+				},
+			};
+		case "PLAYER_DOWN_MOVE":
+			return {
+				...players,
+				[action.id]: {
+					...players[action.id],
+					screen: action.screen,
+					nextPiece: action.nextPiece,
+				},
 			};
 		default:
 			throw new Error(`Unhandled action type ${action.type}`);

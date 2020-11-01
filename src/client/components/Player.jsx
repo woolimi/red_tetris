@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import Stage from "./Stage";
-import NextBlock from "./NextBlock";
 import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
+import H from "../gameHelper";
 
 const CenterDiv = styled.div`
 	text-align: center;
@@ -19,15 +19,11 @@ const Ready = styled.div`
 `;
 
 const Player = ({ player, scale = 0.4, owner }) => {
-	const emptyStage = useCallback(() => {
-		new Array(10).fill(new Array(20).fill(0));
-	}, []);
-
 	return (
 		<CenterDiv>
 			{owner === player.id && <Icon color="red" name="star"></Icon>}
 			<span>{player ? player.name : ""}</span>
-			<Stage stage={player ? player.stage : emptyStage()} scale={scale} />
+			<Stage screen={player ? player.screen : H.newStage()} scale={scale} />
 			{!owner
 				? null
 				: owner !== player.id && (

@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
 import io from "socket.io-client";
+import { SERVER } from "../gameHelper";
 
 const SocketContext = createContext();
 
@@ -15,7 +16,7 @@ function reducer(socket, action) {
 }
 
 export default function SocketProvider({ children }) {
-	const defaultState = io.connect(`http://localhost:5000`, {
+	const defaultState = io.connect(`${SERVER}`, {
 		path: "/socket",
 		transports: ["websocket"],
 	});

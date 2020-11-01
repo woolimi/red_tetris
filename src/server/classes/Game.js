@@ -1,20 +1,20 @@
+const Piece = require("./Piece");
+const _ = require("lodash");
+const H = require("../gameHelper");
+
 class Game {
+	static pieceList = Piece.createList(); // 100 pieces
+
 	constructor(roomName) {
 		this.id = roomName;
 		this.players = new Map(); // Map(Player)
 		this.isStarted = false;
 		this.owner = null;
+		this.pieceIdx = 0;
 	}
 
 	addPlayer(player) {
 		this.players.set(player.id, player);
-	}
-
-	broadcasting(eventName, data, io) {
-		if (!io) throw Error("game.emit(): io is not defined");
-		for (let [key] of this.players) {
-			io.to("/game#" + key).emit(eventName, data);
-		}
 	}
 
 	findPlayerByName(playerName) {
@@ -31,15 +31,17 @@ class Game {
 	}
 
 	getPlayers() {
-		// return Object.fromEntries(this.players);
-		return Array.from(this.players).map((p) => {
-			return {
-				id: p[1].id,
-				name: p[1].name,
-				stage: p[1].stage,
-				isReady: p[1].isReady,
+		const ret = {};
+		for (const [key, p] of this.players) {
+			ret[key] = {
+				id: p.id,
+				name: p.name,
+				nextPiece: p.nextPiece,
+				screen: p.screen,
+				isReady: p.isReady,
 			};
-		});
+		}
+		return ret;
 	}
 
 	removePlayerById(playerId) {
@@ -54,7 +56,29 @@ class Game {
 		this.isStarted = isStarted;
 	}
 
-	distributePieces() {}
+	initGamePieces() {
+		this.pieceIdx = (Math.random() * 99) | 0;
+	}
+	initPlayersPieces() {
+		const piece = Piece.TETROMINOS[Game.pieceList[this.pieceIdx]];
+		const nextPiece = Game.pieceList[this.pieceIdx + 1];
+		const initoffset = piece.length === 4 ? 5 : 4;
+		const pos = {
+			x: initoffset - ((piece.length / 2) | 0),
+			y: 0,
+		};
+		for (const [key, p] of this.players) {
+			p.pieceIdx = this.pieceIdx;
+			p.piece = piece;
+			p.nextPiece = nextPiece;
+			p.setPos(pos.x, pos.y);
+		}
+	}
+	initPlayersScreens() {
+		for (const [key, p] of this.players) {
+			p.screen = H.drawScreen(p);
+		}
+	}
 }
 
 module.exports = Game;
