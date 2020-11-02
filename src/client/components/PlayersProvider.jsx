@@ -39,6 +39,14 @@ function reducer(players, action) {
 					nextPiece: action.nextPiece,
 				},
 			};
+		case "PLAYER_ROTATE":
+			return {
+				...players,
+				[action.id]: {
+					...players[action.id],
+					screen: action.screen,
+				},
+			};
 		default:
 			throw new Error(`Unhandled action type ${action.type}`);
 	}

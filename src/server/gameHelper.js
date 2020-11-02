@@ -24,9 +24,17 @@ H.collide = (player) => {
 H.drawScreen = (player) => {
 	const { stage, piece, pos } = player;
 	const newScreen = _.cloneDeep(stage);
+	const spos = { ...pos };
+
+	while (!H.collide({ ...player, pos: spos })) {
+		spos.y++;
+	}
+	spos.y--;
+
 	piece.forEach((row, y) => {
 		row.forEach((val, x) => {
 			if (val !== 0) {
+				newScreen[spos.y + y][spos.x + x] = "S" + val;
 				newScreen[pos.y + y][pos.x + x] = val;
 			}
 		});

@@ -38,10 +38,47 @@ class Player {
 			this.merge();
 			this.reset();
 			this.score += this.sweep();
-			return true;
 		}
-		return false;
 	}
+
+	drop() {
+		while (!H.collide(this)) {
+			this.pos.y++;
+		}
+		this.pos.y--;
+		this.merge();
+		this.reset();
+		this.score += this.sweep();
+	}
+
+	rotate(dir) {
+		const pos = this.pos.x;
+		let offset = 1;
+		this._rotate(this.piece, dir);
+		while (H.collide(this)) {
+			this.pos.x += offset;
+			offset = -(offset + (offset > 0 ? 1 : -1));
+			if (offset > this.piece[0].length) {
+				this._rotate(this.piece, -dir);
+				this.pos.x = pos;
+				return;
+			}
+		}
+	}
+
+	_rotate(matrix, dir) {
+		for (let y = 0; y < matrix.length; ++y) {
+			for (let x = 0; x < y; ++x) {
+				[matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
+			}
+		}
+		if (dir > 0) {
+			matrix.forEach((row) => row.reverse());
+		} else {
+			matrix.reverse();
+		}
+	}
+
 	// piece to stage
 	merge() {
 		this.piece.forEach((row, y) => {

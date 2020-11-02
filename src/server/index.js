@@ -56,6 +56,31 @@ io.on("connection", (socket) => {
 		io.to(roomName).emit("game:down", data);
 	});
 
+	socket.on("game:drop", ({ roomName }) => {
+		const game = ROOMS.get(roomName);
+		const player = game.findPlayerById(socket.client.id);
+		player.drop();
+		player.screen = H.drawScreen(player);
+		const data = {
+			id: socket.client.id,
+			screen: player.screen,
+			nextPiece: player.nextPiece,
+		};
+		io.to(roomName).emit("game:down", data);
+	});
+
+	socket.on("game:rotate", ({ roomName }) => {
+		const game = ROOMS.get(roomName);
+		const player = game.findPlayerById(socket.client.id);
+		player.rotate(1);
+		player.screen = H.drawScreen(player);
+		const data = {
+			id: socket.client.id,
+			screen: player.screen,
+		};
+		io.to(roomName).emit("game:rotate", data);
+	});
+
 	// ROOM EVENT
 	socket.on("player:ready", ({ roomName }) => {
 		const game = ROOMS.get(roomName);

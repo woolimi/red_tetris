@@ -65,6 +65,9 @@ const Room = ({ history, match }) => {
 		socket.on("game:move", ({ id, screen }) => {
 			playersDispatch({ type: "PLAYER_LR_MOVE", id, screen });
 		});
+		socket.on("game:rotate", ({ id, screen }) => {
+			playersDispatch({ type: "PLAYER_ROTATE", id, screen });
+		});
 		socket.on("game:down", ({ id, screen, nextPiece }) => {
 			playersDispatch({ type: "PLAYER_DOWN_MOVE", id, screen, nextPiece });
 		});
@@ -85,7 +88,9 @@ const Room = ({ history, match }) => {
 	const onKeyDown = (e) => {
 		switch (e.key) {
 			case "ArrowUp":
-				console.log("ArrowUp");
+				socket.emit("game:rotate", {
+					roomName,
+				});
 				e.preventDefault();
 				break;
 			case "ArrowDown":
@@ -109,7 +114,9 @@ const Room = ({ history, match }) => {
 				e.preventDefault();
 				break;
 			case " ":
-				console.log("Space");
+				socket.emit("game:drop", {
+					roomName,
+				});
 				e.preventDefault();
 				break;
 		}
