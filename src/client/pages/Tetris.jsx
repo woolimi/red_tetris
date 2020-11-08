@@ -1,14 +1,13 @@
 import React from "react";
 import Room from "../components/Room";
-import SocketProvider from "../components/SocketProvider";
-import PlayersProvider from "../components/PlayersProvider";
+import TetrisProvider, { SocketProvider } from "../components/TetrisProvider";
 
 const Tetris = ({ history, match }) => {
 	return (
 		<SocketProvider>
-			<PlayersProvider>
+			<TetrisProvider>
 				<Room history={history} match={match} />
-			</PlayersProvider>
+			</TetrisProvider>
 		</SocketProvider>
 	);
 };

@@ -1,6 +1,7 @@
-const Piece = require("./Piece");
 const _ = require("lodash");
+const Piece = require("./Piece");
 const H = require("../gameHelper");
+const { PLAYER_STATUS } = H;
 
 class Game {
 	static pieceList = Piece.createList(); // 100 pieces
@@ -11,6 +12,37 @@ class Game {
 		this.isStarted = false;
 		this.owner = null;
 		this.pieceIdx = 0;
+		this.winner = null;
+	}
+
+	isAllReady() {
+		for (let [key, p] of this.players) {
+			if (p.status !== PLAYER_STATUS.READY && this.owner !== p.id) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	isFinished() {
+		if (this.players.size === 1) {
+			const solo = this.players.values().next().value;
+			if (solo.status === PLAYER_STATUS.INGAME) return false;
+			this.isStarted = false;
+			this.winner = solo.id;
+			return true;
+		}
+
+		const survivers = [];
+		for (let [key, p] of this.players) {
+			if (p.status === PLAYER_STATUS.INGAME) {
+				survivers.push(p);
+			}
+		}
+		if (survivers.length > 1) return false;
+		this.isStarted = false;
+		this.winner = survivers[0].id;
+		return true;
 	}
 
 	addPlayer(player) {
@@ -18,9 +50,9 @@ class Game {
 	}
 
 	findPlayerByName(playerName) {
-		for (let player of this.players) {
-			if (player[1].name === playerName) {
-				return player;
+		for (let [key, p] of this.players) {
+			if (p.name === playerName) {
+				return p;
 			}
 		}
 		return null;
@@ -38,7 +70,8 @@ class Game {
 				name: p.name,
 				nextPiece: p.nextPiece,
 				screen: p.screen,
-				isReady: p.isReady,
+				status: p.status,
+				score: p.score,
 			};
 		}
 		return ret;
@@ -48,34 +81,40 @@ class Game {
 		this.players.delete(playerId);
 	}
 
-	setPlayerReady(playerId) {
-		this.players.get(playerId).isReady = true;
+	setPlayerStatus(playerId, status) {
+		this.players.get(playerId).status = status;
 	}
 
-	setStarted(isStarted) {
+	setIsStarted(isStarted) {
 		this.isStarted = isStarted;
+		for (const [key, p] of this.players) {
+			p.status = PLAYER_STATUS.INGAME;
+		}
 	}
 
 	initGamePieces() {
 		this.pieceIdx = (Math.random() * 99) | 0;
 	}
+
 	initPlayersPieces() {
 		const piece = Piece.TETROMINOS[Game.pieceList[this.pieceIdx]];
 		const nextPiece = Game.pieceList[this.pieceIdx + 1];
-		const initoffset = piece.length === 4 ? 5 : 4;
+		const initOffset = piece.length === 4 ? 5 : 4;
 		const pos = {
-			x: initoffset - ((piece.length / 2) | 0),
+			x: initOffset - ((piece.length / 2) | 0),
 			y: 0,
 		};
 		for (const [key, p] of this.players) {
 			p.pieceIdx = this.pieceIdx;
-			p.piece = piece;
+			p.piece = _.cloneDeep(piece);
 			p.nextPiece = nextPiece;
 			p.setPos(pos.x, pos.y);
+			p.status = PLAYER_STATUS.INGAME;
 		}
 	}
 	initPlayersScreens() {
 		for (const [key, p] of this.players) {
+			p.stage = H.newStage();
 			p.screen = H.drawScreen(p);
 		}
 	}

@@ -12,3 +12,8 @@ body {
 	align-items: center;
 	justify-content: center;
 }
+
+@font-face {
+	font-family: "Pixel";
+	src: url("font/Pixel-LCD-7.woff") format("woff");
+}

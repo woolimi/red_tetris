@@ -3,25 +3,23 @@ import styled from "styled-components";
 import { TETROMINOS } from "../gameHelper";
 
 const StyledCell = styled.div`
-	width: auto;
+	width: 100%;
+	height: 100%;
 	background: rgba(${(props) => props.color}, 0.8);
 	border: 4px solid;
 	border-bottom-color: rgba(${(props) => props.color}, 0.1);
 	border-right-color: rgba(${(props) => props.color}, 1);
 	border-top-color: rgba(${(props) => props.color}, 1);
 	border-left-color: rgba(${(props) => props.color}, 0.3);
-`;
-
-const Shadow = styled.div`
-	width: auto;
-	background: rgba(${(props) => props.color}, 0.2);
+	opacity: ${(props) => (props.type === "S" ? 0.2 : 1)};
 `;
 
 const Cell = ({ type }) => {
-	return type.length === 1 || type === 0 ? (
-		<StyledCell color={TETROMINOS[type].color} />
-	) : (
-		<Shadow color={TETROMINOS[type].color} />
+	return (
+		<StyledCell
+			color={TETROMINOS[type].color}
+			type={type.length && type.length > 1 ? "S" : "N"}
+		/>
 	);
 };
 

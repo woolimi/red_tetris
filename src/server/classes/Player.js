@@ -1,4 +1,6 @@
+const _ = require("lodash");
 const H = require("../gameHelper");
+const { PLAYER_STATUS } = H;
 const Piece = require("./Piece");
 const Game = require("./Game");
 
@@ -10,8 +12,7 @@ class Player {
 		this.stage = H.newStage();
 		this.screen = H.newStage();
 		this.score = 0;
-		this.isReady = false;
-		this.isGameOver = false;
+		this.status = PLAYER_STATUS.INIT;
 		this.pos = { x: 0, y: 0 };
 		this.piece = [0];
 		this.nextPiece = "";
@@ -36,8 +37,14 @@ class Player {
 		if (H.collide(this)) {
 			this.pos.y--;
 			this.merge();
-			this.reset();
 			this.score += this.sweep();
+			this.reset();
+			// shadow is always length = 2
+			if (
+				H.collide(this) ||
+				this.stage[0].find((v) => v !== 0 && v.length !== 2)
+			)
+				this.status = PLAYER_STATUS.GAMEOVER;
 		}
 	}
 
@@ -47,8 +54,11 @@ class Player {
 		}
 		this.pos.y--;
 		this.merge();
-		this.reset();
 		this.score += this.sweep();
+		this.reset();
+		// shadow is always length = 2
+		if (H.collide(this) || this.stage[0].find((v) => v !== 0 && v.length !== 2))
+			this.status = PLAYER_STATUS.GAMEOVER;
 	}
 
 	rotate(dir) {
@@ -83,7 +93,11 @@ class Player {
 	merge() {
 		this.piece.forEach((row, y) => {
 			row.forEach((val, x) => {
-				if (val !== 0) {
+				if (
+					val !== 0 &&
+					!_.isUndefined(this.stage[y + this.pos.y]) &&
+					!_.isUndefined(this.stage[y + this.pos.y][x + this.pos.x])
+				) {
 					this.stage[y + this.pos.y][x + this.pos.x] = val;
 				}
 			});
@@ -93,8 +107,8 @@ class Player {
 	// remove prev piece => add new piece
 	// reset player pos
 	reset() {
+		this.piece = _.cloneDeep(Piece.TETROMINOS[this.nextPiece]);
 		this.pieceIdx = (this.pieceIdx + 1) % 100;
-		this.piece = Piece.TETROMINOS[Game.pieceList[this.pieceIdx]];
 		this.nextPiece = Game.pieceList[this.pieceIdx];
 		const initOffset = this.piece.length === 4 ? 5 : 4;
 		this.pos.x = initOffset - ((this.piece.length / 2) | 0);

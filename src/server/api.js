@@ -7,7 +7,7 @@ router.post("/room", (req, res) => {
 	const { roomName, userName } = req.body;
 	if (ROOMS.has(roomName)) {
 		const game = ROOMS.get(roomName);
-		if (game.players.size >= 5)
+		if (game.players.size >= 3)
 			return res.status(403).json({ error: `Room(${roomName}) is full.` });
 		if (game.findPlayerByName(userName)) {
 			return res
@@ -26,7 +26,7 @@ router.get("/room", (req, res) => {
 	if (!ROOMS.has(roomName))
 		return res.status(403).json({ error: `Room(${roomName}) doesn't exist` });
 	const game = ROOMS.get(roomName);
-	if (game.players.size >= 5)
+	if (game.players.size >= 3)
 		return res.status(403).json({ access: false, error: "Room is full." });
 	if (game.findPlayerByName(userName))
 		return res
