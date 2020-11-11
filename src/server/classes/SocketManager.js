@@ -19,10 +19,30 @@ class SocketManager {
 		this._onPlayerRotate();
 		this._onGameStart();
 		this._onDisconnecting();
+		this._onChat();
 	}
 
 	emit(eventName, data) {
 		this.io.to(this.roomName).emit(eventName, data);
+	}
+
+	_onChat() {
+		this.socket.on("CHAT", ({ content }) => {
+			const game = ROOMS.get(this.roomName);
+			const player = game.findPlayerById(this.id);
+			this.emit("CHAT", {
+				userName: player.name,
+				content,
+			});
+		});
+		this.socket.on("CHAT:ENTER", () => {
+			const game = ROOMS.get(this.roomName);
+			const player = game.findPlayerById(this.id);
+			this.emit("CHAT", {
+				userName: "system",
+				content: `user "${player.name}" just arrived`,
+			});
+		});
 	}
 
 	_onPlayerDropDown() {
@@ -31,8 +51,8 @@ class SocketManager {
 			if (!game.isStarted) return;
 
 			const player = game.findPlayerById(this.id);
-			if (type === "DOWN") player.down();
-			if (type == "DROP") player.drop();
+			if (type === "DOWN") game.addPanaltyToOthers(player.id, player.down());
+			if (type == "DROP") game.addPanaltyToOthers(player.id, player.drop());
 
 			player.screen = H.drawScreen(player);
 
@@ -131,40 +151,67 @@ class SocketManager {
 			game.addPlayer(player);
 
 			this.emit("ROOM:PLAYERS", {
+				winner: game.winner,
 				players: game.getPlayers(),
 			});
 			this.emit("ROOM:OWNER", {
 				owner: game.owner,
 			});
-			console.log("ROOMS", ROOMS);
 		});
 	}
 
 	_onDisconnecting() {
 		this.socket.on("disconnecting", () => {
 			console.log(`disconnecting ${this.id}`);
+
 			const game = ROOMS.get(this.roomName);
 			if (!game) return;
+
+			const player = game.findPlayerById(this.id);
+			this.emit("CHAT", {
+				userName: "system",
+				content: `user "${player.name}" just left`,
+			});
 
 			game.removePlayerById(this.id);
 			this.socket.leave(this.roomName);
 
 			if (game.players.size === 0) {
 				ROOMS.delete(this.roomName);
-				console.log("ROOMS", ROOMS);
 				return;
 			}
-			if (game.owner === this.id) {
+
+			// someone quit during game
+			if (game.isStarted && game.players.size === 1) {
+				const lastPlayer = game.players.values().next().value;
+				lastPlayer.status = PLAYER_STATUS.GAMEOVER;
+				game.isStarted = false;
+				game.winner = lastPlayer.id;
+				game.owner = game.winner;
+				this.emit("GAME:FINISH", {
+					winner: game.winner,
+					owner: game.winner,
+					players: game.getPlayers(),
+					isStarted: game.isStarted,
+				});
+				return;
+			} else if (game.isStarted && game.players.size > 1) {
+				this.emit("ROOM:PLAYERS", {
+					players: game.getPlayers(),
+				});
+			}
+
+			if (!game.isStarted && game.owner === this.id) {
 				game.owner = game.players.keys().next().value;
 				game.findPlayerById(game.owner).status = PLAYER_STATUS.INIT;
 				this.emit("ROOM:OWNER", {
 					owner: game.owner,
 				});
+				this.emit("ROOM:PLAYERS", {
+					winner: game.winner,
+					players: game.getPlayers(),
+				});
 			}
-			this.emit("ROOM:PLAYERS", {
-				players: game.getPlayers(),
-			});
-			console.log("ROOMS", ROOMS);
 		});
 	}
 }

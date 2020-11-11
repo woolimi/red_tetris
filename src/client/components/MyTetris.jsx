@@ -28,13 +28,7 @@ const MyTetris = ({ wrapperRef }) => {
 				<Grid.Column width={10}>
 					<Container fluid>
 						<PlayerInfo isOwner={isOwner} name={me.name} />
-						<Stage
-							screen={me.screen}
-							scale={1}
-							status={
-								me.status === PLAYER_STATUS.READY && !isStarted ? "READY" : ""
-							}
-						></Stage>
+						<Stage screen={me.screen} scale={1} player={me}></Stage>
 					</Container>
 				</Grid.Column>
 				<Grid.Column width={6}>

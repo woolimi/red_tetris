@@ -49,6 +49,16 @@ class Game {
 		this.players.set(player.id, player);
 	}
 
+	addPanaltyToOthers(originId, lines) {
+		if (this.players.size === 1 || lines <= 1) return;
+		lines -= 1; // n -1 panalty
+		for (let [key, p] of this.players) {
+			if (p.id !== originId) {
+				p.panalty += lines;
+			}
+		}
+	}
+
 	findPlayerByName(playerName) {
 		for (let [key, p] of this.players) {
 			if (p.name === playerName) {

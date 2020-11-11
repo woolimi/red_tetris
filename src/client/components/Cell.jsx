@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TETROMINOS } from "../gameHelper";
+import { TETROMINOS, PLAYER_STATUS } from "../gameHelper";
 
 const StyledCell = styled.div`
 	width: 100%;
@@ -14,10 +14,16 @@ const StyledCell = styled.div`
 	opacity: ${(props) => (props.type === "S" ? 0.2 : 1)};
 `;
 
-const Cell = ({ type }) => {
+const Cell = ({ type, status }) => {
 	return (
 		<StyledCell
-			color={TETROMINOS[type].color}
+			color={
+				type === 0
+					? TETROMINOS[type].color
+					: status === PLAYER_STATUS.GAMEOVER
+					? "70, 70, 70"
+					: TETROMINOS[type].color
+			}
 			type={type.length && type.length > 1 ? "S" : "N"}
 		/>
 	);

@@ -85,12 +85,8 @@ const Room = ({ history, match }) => {
 							<MyTetris wrapperRef={wrapperRef} />
 						</Grid.Column>
 						<Grid.Column width={8}>
-							<div style={{ height: "70%" }}>
-								<OthersTetris />
-							</div>
-							<div style={{ height: "30%" }}>
-								<Chat />
-							</div>
+							<OthersTetris />
+							<Chat />
 						</Grid.Column>
 					</Grid>
 				)}

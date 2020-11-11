@@ -32,7 +32,9 @@ router.get("/room", (req, res) => {
 		return res
 			.status(403)
 			.json({ error: `User(${userName}) is already taken.` });
-	// check if game already started
+	if (game.isStarted) {
+		return res.status(403).json({ error: `Room(${roomName}) is in game.` });
+	}
 	return res.status(200).json({});
 });
 

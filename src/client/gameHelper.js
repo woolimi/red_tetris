@@ -22,6 +22,10 @@ export const TETROMINOS = {
 	0: {
 		color: "0, 0, 0",
 	},
+	B: {
+		// panalty block
+		color: "70, 70, 70",
+	},
 	I: {
 		matrix: [
 			[0, 0, 0, 0],

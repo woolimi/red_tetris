@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Cell from "./Cell";
 import styled from "styled-components";
 import { TETROMINOS } from "../gameHelper";
@@ -27,9 +27,6 @@ const StyledNextPiece = styled.div`
 `;
 
 const NextPiece = ({ type }) => {
-	useEffect(() => {
-		console.log("NextPiece rendered");
-	});
 	return (
 		<NextPieceContainer>
 			<div>NEXT</div>

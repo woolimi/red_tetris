@@ -1,24 +1,54 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import ChatList from "./ChatList";
+import ChatForm from "./ChatForm";
 import styled from "styled-components";
-import { TETROMINOS } from "../gameHelper";
+import { useSocketStore } from "./TetrisProvider";
 
-const ChatBox = styled.div`
-	height: 100%;
+const StyledChat = styled.div`
+	height: 40%;
 	width: 80%;
-	box-sizing: border-box;
-	border: 3px solid #333;
-	padding: 20px;
+	padding: 0;
 	margin: auto;
-	background-color: #0e0e0e;
-	border-radius: 20px;
 `;
 
 const Chat = () => {
+	const [list, setList] = useState([]);
+	const [content, setContent] = useState("");
+	const socket = useSocketStore();
+
+	useEffect(() => {
+		socket.emit("CHAT:ENTER");
+	}, [socket]);
+
+	useEffect(() => {
+		socket.on("CHAT", (data) => {
+			setList((prev) => {
+				const next = prev.concat(data);
+				if (next.length > 50) next.shift();
+				return next;
+			});
+		});
+	}, [socket]);
+
+	const onSubmit = useCallback((e) => {
+		e.preventDefault();
+		setContent((content) => {
+			socket.emit("CHAT", {
+				content,
+			});
+			return "";
+		});
+	});
+
+	const onChange = useCallback((e) => {
+		setContent(e.target.value);
+	}, []);
+
 	return (
-		<ChatBox>
-			{/* <ChatList /> */}
-			{/* <ChatForm /> */}
-		</ChatBox>
+		<StyledChat>
+			<ChatList list={list} />
+			<ChatForm onSubmit={onSubmit} onChange={onChange} content={content} />
+		</StyledChat>
 	);
 };
 

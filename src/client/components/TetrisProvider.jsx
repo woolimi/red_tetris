@@ -20,6 +20,7 @@ function reducer(tetris, action) {
 		case "ROOM:PLAYERS":
 			return {
 				...tetris,
+				winner: action.winner,
 				players: action.players,
 			};
 		case "ROOM:OWNER":

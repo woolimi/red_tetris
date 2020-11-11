@@ -16,6 +16,7 @@ class Player {
 		this.pos = { x: 0, y: 0 };
 		this.piece = [0];
 		this.nextPiece = "";
+		this.panalty = 0;
 	}
 
 	setPos(x, y) {
@@ -36,16 +37,9 @@ class Player {
 		this.pos.y++;
 		if (H.collide(this)) {
 			this.pos.y--;
-			this.merge();
-			this.score += this.sweep();
-			this.reset();
-			// shadow is always length = 2
-			if (
-				H.collide(this) ||
-				this.stage[0].find((v) => v !== 0 && v.length !== 2)
-			)
-				this.status = PLAYER_STATUS.GAMEOVER;
+			return this._cleanUp();
 		}
+		return 0;
 	}
 
 	drop() {
@@ -53,12 +47,18 @@ class Player {
 			this.pos.y++;
 		}
 		this.pos.y--;
-		this.merge();
-		this.score += this.sweep();
+		return this._cleanUp();
+	}
+
+	_cleanUp() {
+		this.mergePiece();
+		this.mergePanalty();
+		const rows = this.sweep();
 		this.reset();
 		// shadow is always length = 2
 		if (H.collide(this) || this.stage[0].find((v) => v !== 0 && v.length !== 2))
 			this.status = PLAYER_STATUS.GAMEOVER;
+		return rows;
 	}
 
 	rotate(dir) {
@@ -90,7 +90,7 @@ class Player {
 	}
 
 	// piece to stage
-	merge() {
+	mergePiece() {
 		this.piece.forEach((row, y) => {
 			row.forEach((val, x) => {
 				if (
@@ -102,6 +102,15 @@ class Player {
 				}
 			});
 		});
+	}
+
+	mergePanalty() {
+		for (let i = 0; i < this.panalty; i++) {
+			const row = new Array(10).fill("B");
+			this.stage.shift();
+			this.stage.push(row);
+		}
+		this.panalty = 0;
 	}
 
 	// remove prev piece => add new piece
@@ -116,22 +125,27 @@ class Player {
 	}
 
 	// remove filled line and return score
+	// 1 line : 10 score
+	// 2 line : 30 score
+	// 3 line : 60 score
+	// 4 line : 120 score
 	sweep() {
-		let rowCount = 1;
+		let rowCount = 0;
 		let score = 0;
 		outer: for (let y = this.stage.length - 1; y > 0; --y) {
 			for (let x = 0; x < this.stage[y].length; ++x) {
-				if (this.stage[y][x] === 0) {
+				if (this.stage[y][x] === 0 || this.stage[y][x] === "B") {
 					continue outer;
 				}
 			}
 			const row = this.stage.splice(y, 1)[0].fill(0);
 			this.stage.unshift(row);
 			++y;
+			rowCount += 1;
 			score += rowCount * 10;
-			rowCount *= 2;
 		}
-		return score;
+		this.score += score;
+		return rowCount;
 	}
 }
 
