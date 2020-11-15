@@ -10,9 +10,9 @@ const defaultState = {
 	players: {}, // id: { id, name, screen, nextPiece, status }
 };
 
-const TetrisDispatchContext = createContext(null);
-const TetrisStoreContext = createContext(null);
-const SocketContext = createContext(null);
+export const TetrisDispatchContext = createContext(null);
+export const TetrisStoreContext = createContext(null);
+export const SocketContext = createContext(null);
 
 function reducer(tetris, action) {
 	switch (action.type) {
@@ -35,6 +35,7 @@ function reducer(tetris, action) {
 				...tetris,
 				players: action.players,
 				isStarted: action.isStarted,
+				winner: action.winner,
 				dropTime: 1000,
 			};
 		case "GAME:DROPTIME":
@@ -111,7 +112,11 @@ function reducer(tetris, action) {
 					},
 				},
 			};
-
+		case "PLAYER:QUIT":
+			delete tetris.players[action.id];
+			return {
+				...tetris,
+			};
 		default:
 			throw new Error(`Unhandled action type ${action.type}`);
 	}

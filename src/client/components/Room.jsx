@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useEffect } from "react";
-import { Grid, Container, Segment } from "semantic-ui-react";
+import React, { useCallback, useRef } from "react";
+import { Grid, Container } from "semantic-ui-react";
 import {
 	useTetrisStore,
 	useTetrisDispatch,
@@ -73,7 +73,7 @@ const Room = ({ history, match }) => {
 	);
 
 	return (
-		<Wrapper role="button" tabIndex="0" onKeyDown={onKeyDown} ref={wrapperRef}>
+		<Wrapper role="tetris" tabIndex="0" onKeyDown={onKeyDown} ref={wrapperRef}>
 			<Container textAlign="center" fluid>
 				{!socket.connected ? (
 					<Dimmer active>

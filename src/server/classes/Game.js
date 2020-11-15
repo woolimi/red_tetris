@@ -49,23 +49,14 @@ class Game {
 		this.players.set(player.id, player);
 	}
 
-	addPanaltyToOthers(originId, lines) {
-		if (this.players.size === 1 || lines <= 1) return;
-		lines -= 1; // n -1 panalty
-		for (let [key, p] of this.players) {
-			if (p.id !== originId) {
-				p.panalty += lines;
-			}
-		}
+	addPenaltyToOthers(originId, penalty) {
+		_.each([...this.players], ([key, p]) => {
+			if (p.id !== originId) p.panalty += penalty;
+		});
 	}
 
 	findPlayerByName(playerName) {
-		for (let [key, p] of this.players) {
-			if (p.name === playerName) {
-				return p;
-			}
-		}
-		return null;
+		return _.find([...this.players], ([key, p]) => p.name === playerName);
 	}
 
 	findPlayerById(playerId) {
@@ -74,7 +65,7 @@ class Game {
 
 	getPlayers() {
 		const ret = {};
-		for (const [key, p] of this.players) {
+		_.each([...this.players], ([key, p]) => {
 			ret[key] = {
 				id: p.id,
 				name: p.name,
@@ -83,7 +74,7 @@ class Game {
 				status: p.status,
 				score: p.score,
 			};
-		}
+		});
 		return ret;
 	}
 
@@ -95,38 +86,20 @@ class Game {
 		this.players.get(playerId).status = status;
 	}
 
-	setIsStarted(isStarted) {
-		this.isStarted = isStarted;
-		for (const [key, p] of this.players) {
-			p.status = PLAYER_STATUS.INGAME;
-		}
+	init() {
+		this.isStarted = true;
+		this.winner = null;
+		this._initGamePiece();
+		this._initPlayers();
 	}
 
-	initGamePieces() {
+	_initGamePiece() {
 		this.pieceIdx = (Math.random() * 99) | 0;
 	}
 
-	initPlayersPieces() {
-		const piece = Piece.TETROMINOS[Game.pieceList[this.pieceIdx]];
+	_initPlayers() {
 		const nextPiece = Game.pieceList[this.pieceIdx + 1];
-		const initOffset = piece.length === 4 ? 5 : 4;
-		const pos = {
-			x: initOffset - ((piece.length / 2) | 0),
-			y: 0,
-		};
-		for (const [key, p] of this.players) {
-			p.pieceIdx = this.pieceIdx;
-			p.piece = _.cloneDeep(piece);
-			p.nextPiece = nextPiece;
-			p.setPos(pos.x, pos.y);
-			p.status = PLAYER_STATUS.INGAME;
-		}
-	}
-	initPlayersScreens() {
-		for (const [key, p] of this.players) {
-			p.stage = H.newStage();
-			p.screen = H.drawScreen(p);
-		}
+		_.each([...this.players], ([key, p]) => p.init(this.pieceIdx, nextPiece));
 	}
 }
 

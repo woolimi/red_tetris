@@ -20,7 +20,8 @@ const Home = ({ history }) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			if (!roomName || !userName) throw "Please type room name and user name";
+			if (!roomName || !userName)
+				throw Error("Please type room name and user name");
 			const res = await fetch(`http://localhost:5000/api/room`, {
 				method: "POST",
 				body: JSON.stringify({ roomName, userName }),

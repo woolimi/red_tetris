@@ -19,6 +19,27 @@ class Player {
 		this.panalty = 0;
 	}
 
+	init(pieceIdx, nextPiece) {
+		this.status = PLAYER_STATUS.INGAME;
+		this.pieceIdx = pieceIdx;
+		this.nextPiece = nextPiece;
+		this.reset();
+		this.stage = H.newStage();
+		this.screen = H.drawScreen(this);
+	}
+
+	// remove prev piece => add new piece
+	// reset player pos
+	reset() {
+		this.piece = _.cloneDeep(Piece.TETROMINOS[this.nextPiece]);
+		this.pieceIdx = (this.pieceIdx + 1) % 100;
+		this.nextPiece = Game.pieceList[this.pieceIdx];
+		const initOffset =
+			this.piece.length === 4 || this.piece.length === 2 ? 5 : 4;
+		this.pos.x = initOffset - ((this.piece.length / 2) | 0);
+		this.pos.y = 0;
+	}
+
 	setPos(x, y) {
 		this.pos.x = x;
 		this.pos.y = y;
@@ -35,6 +56,7 @@ class Player {
 
 	down() {
 		this.pos.y++;
+		this.mergePenalty();
 		if (H.collide(this)) {
 			this.pos.y--;
 			return this._cleanUp();
@@ -43,6 +65,7 @@ class Player {
 	}
 
 	drop() {
+		this.mergePenalty();
 		while (!H.collide(this)) {
 			this.pos.y++;
 		}
@@ -52,7 +75,6 @@ class Player {
 
 	_cleanUp() {
 		this.mergePiece();
-		this.mergePanalty();
 		const rows = this.sweep();
 		this.reset();
 		// shadow is always length = 2
@@ -82,11 +104,8 @@ class Player {
 				[matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
 			}
 		}
-		if (dir > 0) {
-			matrix.forEach((row) => row.reverse());
-		} else {
-			matrix.reverse();
-		}
+		if (dir > 0) matrix.forEach((row) => row.reverse());
+		else matrix.reverse();
 	}
 
 	// piece to stage
@@ -104,24 +123,13 @@ class Player {
 		});
 	}
 
-	mergePanalty() {
+	mergePenalty() {
 		for (let i = 0; i < this.panalty; i++) {
 			const row = new Array(10).fill("B");
 			this.stage.shift();
 			this.stage.push(row);
 		}
 		this.panalty = 0;
-	}
-
-	// remove prev piece => add new piece
-	// reset player pos
-	reset() {
-		this.piece = _.cloneDeep(Piece.TETROMINOS[this.nextPiece]);
-		this.pieceIdx = (this.pieceIdx + 1) % 100;
-		this.nextPiece = Game.pieceList[this.pieceIdx];
-		const initOffset = this.piece.length === 4 ? 5 : 4;
-		this.pos.x = initOffset - ((this.piece.length / 2) | 0);
-		this.pos.y = 0;
 	}
 
 	// remove filled line and return score

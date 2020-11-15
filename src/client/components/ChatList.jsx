@@ -3,7 +3,7 @@ import styled from "styled-components";
 import stc from "string-to-color";
 
 const StyledChatList = styled.div`
-	height: 85%;
+	height: 30vh;
 	width: 100%;
 	box-sizing: border-box;
 	border: 3px solid #333;

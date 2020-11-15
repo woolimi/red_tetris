@@ -23,7 +23,7 @@ export function useCheckRoom(roomName, userName, history, socket) {
 	useEffect(() => {
 		_check_room(roomName, userName, history, socket);
 		return () => {
-			if (socket) socket.close();
+			return socket && socket.close();
 		};
 	}, [roomName, userName, socket]);
 }

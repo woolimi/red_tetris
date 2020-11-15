@@ -2,6 +2,7 @@ const { ROOMS } = require("../Rooms");
 const H = require("../gameHelper");
 const { PLAYER_STATUS } = H;
 const Player = require("./Player");
+const _ = require("lodash");
 
 class SocketManager {
 	constructor(io, socket) {
@@ -51,9 +52,8 @@ class SocketManager {
 			if (!game.isStarted) return;
 
 			const player = game.findPlayerById(this.id);
-			if (type === "DOWN") game.addPanaltyToOthers(player.id, player.down());
-			if (type == "DROP") game.addPanaltyToOthers(player.id, player.drop());
-
+			const lines = type === "DOWN" ? player.down() : player.drop();
+			if (lines > 1) game.addPenaltyToOthers(player.id, lines - 1);
 			player.screen = H.drawScreen(player);
 
 			if (game.isFinished()) {
@@ -89,11 +89,10 @@ class SocketManager {
 			const player = game.findPlayerById(this.id);
 			player.rotate(1);
 			player.screen = H.drawScreen(player);
-			const data = {
+			this.emit("PLAYER:ROTATE", {
 				id: this.id,
 				screen: player.screen,
-			};
-			this.emit("PLAYER:ROTATE", data);
+			});
 		});
 	}
 
@@ -128,13 +127,11 @@ class SocketManager {
 			const game = ROOMS.get(this.roomName);
 			if (this.id !== game.owner) return;
 			if (!game.isAllReady()) return;
-			game.setIsStarted(true);
-			game.initGamePieces();
-			game.initPlayersPieces();
-			game.initPlayersScreens();
+			game.init();
 			this.emit("GAME:START", {
 				players: game.getPlayers(),
 				isStarted: game.isStarted,
+				winner: null,
 			});
 		});
 	}
@@ -188,16 +185,15 @@ class SocketManager {
 				game.isStarted = false;
 				game.winner = lastPlayer.id;
 				game.owner = game.winner;
-				this.emit("GAME:FINISH", {
+				return this.emit("GAME:FINISH", {
 					winner: game.winner,
 					owner: game.winner,
 					players: game.getPlayers(),
 					isStarted: game.isStarted,
 				});
-				return;
 			} else if (game.isStarted && game.players.size > 1) {
-				this.emit("ROOM:PLAYERS", {
-					players: game.getPlayers(),
+				return this.emit("PLAYER:QUIT", {
+					id: this.id,
 				});
 			}
 
@@ -207,12 +203,12 @@ class SocketManager {
 				this.emit("ROOM:OWNER", {
 					owner: game.owner,
 				});
-				this.emit("ROOM:PLAYERS", {
-					winner: game.winner,
-					players: game.getPlayers(),
-				});
 			}
-		});
+			this.emit("ROOM:PLAYERS", {
+				winner: game.winner,
+				players: game.getPlayers(),
+			});
+		}); // disconnecting
 	}
 }
 

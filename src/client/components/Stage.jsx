@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { PLAYER_STATUS } from "../gameHelper";
 import Cell from "./Cell";
@@ -27,16 +27,16 @@ const StyledStatus = styled.div`
 	font-family: Pixel;
 `;
 
-const Stage = ({ screen, scale, player }) => {
+const Stage = ({ screen, scale, pstatus, pid }) => {
 	const { isStarted, winner } = useTetrisStore();
-	let status = "";
-
-	if (!isStarted && player.status === PLAYER_STATUS.READY) {
-		status = "READY";
-	} else if (player.status === PLAYER_STATUS.GAMEOVER) {
-		if (winner === player.id) status = "WIN";
-		else status = "LOSE";
-	}
+	let statusMessage = useMemo(() => {
+		if (!isStarted && pstatus === PLAYER_STATUS.READY) {
+			return "READY";
+		} else if (!isStarted && pstatus === PLAYER_STATUS.GAMEOVER) {
+			if (winner === pid) return "WIN";
+			else return "LOSE";
+		}
+	}, [isStarted, winner, pstatus, pid]);
 
 	return (
 		<StyledStage scale={scale}>
@@ -44,12 +44,12 @@ const Stage = ({ screen, scale, player }) => {
 				screen.map((row, y) => {
 					if (y === 0) return null;
 					return row.map((cell, x) => (
-						<Cell key={x} type={cell} status={player.status} />
+						<Cell key={x} type={cell} status={pstatus} />
 					));
 				})}
-			<StyledStatus>{status}</StyledStatus>
+			<StyledStatus>{statusMessage}</StyledStatus>
 		</StyledStage>
 	);
 };
 
-export default Stage;
+export default React.memo(Stage);

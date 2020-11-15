@@ -22,6 +22,9 @@ export function useSocketEvent(socket, tetrisDispatch, roomName, userName) {
 		socket.on("PLAYER:GAMEOVER", (data) => {
 			tetrisDispatch({ type: "PLAYER:GAMEOVER", ...data });
 		});
+		socket.on("PLAYER:QUIT", (data) => {
+			tetrisDispatch({ type: "PLAYER:QUIT", ...data });
+		});
 
 		//PLAYER
 		socket.on("PLAYER:READY", (data) => {

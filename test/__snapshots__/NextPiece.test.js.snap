@@ -1,0 +1,597 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NextPiece /> shows next piece I 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT kcElVS"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fESRnj"
+        color="80,227,230"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fESRnj"
+        color="80,227,230"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fESRnj"
+        color="80,227,230"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fESRnj"
+        color="80,227,230"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows next piece J 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT LCkch"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx iORPbL"
+        color="36,95,223"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx iORPbL"
+        color="36,95,223"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx iORPbL"
+        color="36,95,223"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx iORPbL"
+        color="36,95,223"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows next piece L 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT LCkch"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fhXknm"
+        color="223,173,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fhXknm"
+        color="223,173,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fhXknm"
+        color="223,173,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fhXknm"
+        color="223,173,36"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows next piece O 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT kcElVS"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx kvGAfT"
+        color="223,217,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx kvGAfT"
+        color="223,217,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx kvGAfT"
+        color="223,217,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx kvGAfT"
+        color="223,217,36"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows next piece S 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT LCkch"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx brHyQg"
+        color="48,211,56"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx brHyQg"
+        color="48,211,56"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx brHyQg"
+        color="48,211,56"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx brHyQg"
+        color="48,211,56"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows next piece T 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT LCkch"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows next piece Z 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT LCkch"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx hHoHXG"
+        color="227,78,78"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx hHoHXG"
+        color="227,78,78"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx hHoHXG"
+        color="227,78,78"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx hHoHXG"
+        color="227,78,78"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NextPiece /> shows proper next piece depends on block type 1`] = `
+<div>
+  <div
+    class="sc-gtssRu cwZlDc"
+  >
+    <div>
+      NEXT
+    </div>
+    <div
+      class="sc-dlnjPT LCkch"
+    >
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx dRVgAB"
+        color="0,0,0"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+      <div
+        class="sc-bdnylx fPvjwm"
+        color="132,61,198"
+        data-testid="cell"
+        type="N"
+      />
+    </div>
+  </div>
+</div>
+`;

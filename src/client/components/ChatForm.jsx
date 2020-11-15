@@ -19,7 +19,7 @@ const ChatForm = ({ onSubmit, onChange, content }) => {
 					}}
 					value={content}
 					onChange={onChange}
-					placeholder="some message...."
+					placeholder="some message..."
 				/>
 			</form>
 		</ChatFormWrapper>

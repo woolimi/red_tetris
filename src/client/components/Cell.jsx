@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import _ from "lodash";
 import { TETROMINOS, PLAYER_STATUS } from "../gameHelper";
 
 const StyledCell = styled.div`
@@ -17,11 +18,12 @@ const StyledCell = styled.div`
 const Cell = ({ type, status }) => {
 	return (
 		<StyledCell
+			data-testid="cell"
 			color={
 				type === 0
 					? TETROMINOS[type].color
-					: status === PLAYER_STATUS.GAMEOVER
-					? "70, 70, 70"
+					: !_.isUndefined(status) && status !== PLAYER_STATUS.INGAME
+					? TETROMINOS["B"].color
 					: TETROMINOS[type].color
 			}
 			type={type.length && type.length > 1 ? "S" : "N"}

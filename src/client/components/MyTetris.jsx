@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import Stage from "./Stage";
 import Score from "./Score";
 import { Grid, Container } from "semantic-ui-react";
@@ -8,13 +8,16 @@ import { useTetrisStore, useSocketStore } from "./TetrisProvider";
 import { useInterval } from "../hooks/useInterval";
 import MyButton from "./MyButton";
 import { PLAYER_STATUS } from "../gameHelper";
+import _ from "lodash";
 
 const MyTetris = ({ wrapperRef }) => {
 	const { players, owner, dropTime, isStarted } = useTetrisStore();
 	const socket = useSocketStore();
 	const me = players[socket.id];
-	const others = Object.values(_.omit(players, [socket.id]));
-	const isOwner = !owner || me.id === owner;
+	const isOwner = !owner || (me && me.id === owner);
+	const others = useMemo(() => {
+		return Object.values(_.omit(players, [socket.id]));
+	}, [players, socket.id]);
 
 	useInterval(() => {
 		socket.emit("PLAYER:DROPDOWN", {
@@ -27,21 +30,28 @@ const MyTetris = ({ wrapperRef }) => {
 			<Grid>
 				<Grid.Column width={10}>
 					<Container fluid>
-						<PlayerInfo isOwner={isOwner} name={me.name} />
-						<Stage screen={me.screen} scale={1} player={me}></Stage>
+						<PlayerInfo isOwner={isOwner} name={me ? me.name : ""} />
+						<Stage
+							screen={me ? me.screen : null}
+							scale={1}
+							pstatus={me ? me.status : null}
+							pid={me ? me.id : null}
+						/>
 					</Container>
 				</Grid.Column>
 				<Grid.Column width={6}>
-					<NextPiece type={me.nextPiece} />
-					<Score score={me.score} />
+					<NextPiece type={me ? me.nextPiece : ""} />
+					<Score score={me ? me.score : ""} />
 					<MyButton
 						isOwner={isOwner}
 						wrapperRef={wrapperRef}
 						disabled={
 							isOwner
 								? isStarted === true ||
-								  !!others.find((p) => p.status !== PLAYER_STATUS.READY)
-								: isStarted === true || me.status === PLAYER_STATUS.READY
+								  (others &&
+										!!others.find((p) => p.status !== PLAYER_STATUS.READY))
+								: isStarted === true ||
+								  (me && me.status === PLAYER_STATUS.READY)
 						}
 					/>
 				</Grid.Column>
