@@ -51,12 +51,14 @@ class Game {
 
 	addPenaltyToOthers(originId, penalty) {
 		_.each([...this.players], ([key, p]) => {
-			if (p.id !== originId) p.panalty += penalty;
+			if (p.id !== originId) p.penalty += penalty;
 		});
 	}
 
 	findPlayerByName(playerName) {
-		return _.find([...this.players], ([key, p]) => p.name === playerName);
+		const res = _.find([...this.players], ([key, p]) => p.name === playerName);
+		if (res) return res[1];
+		return null;
 	}
 
 	findPlayerById(playerId) {

@@ -16,7 +16,7 @@ class Player {
 		this.pos = { x: 0, y: 0 };
 		this.piece = [0];
 		this.nextPiece = "";
-		this.panalty = 0;
+		this.penalty = 0;
 	}
 
 	init(pieceIdx, nextPiece) {
@@ -78,7 +78,7 @@ class Player {
 		const rows = this.sweep();
 		this.reset();
 		// shadow is always length = 2
-		if (H.collide(this) || this.stage[0].find((v) => v !== 0 && v.length !== 2))
+		if (this.stage[1].find((v) => v !== 0 && v.length !== 2))
 			this.status = PLAYER_STATUS.GAMEOVER;
 		return rows;
 	}
@@ -90,7 +90,7 @@ class Player {
 		while (H.collide(this)) {
 			this.pos.x += offset;
 			offset = -(offset + (offset > 0 ? 1 : -1));
-			if (offset > this.piece[0].length) {
+			if (Math.abs(offset) > this.piece[0].length + 1) {
 				this._rotate(this.piece, -dir);
 				this.pos.x = pos;
 				return;
@@ -124,12 +124,12 @@ class Player {
 	}
 
 	mergePenalty() {
-		for (let i = 0; i < this.panalty; i++) {
+		for (let i = 0; i < this.penalty; i++) {
 			const row = new Array(10).fill("B");
 			this.stage.shift();
 			this.stage.push(row);
 		}
-		this.panalty = 0;
+		this.penalty = 0;
 	}
 
 	// remove filled line and return score

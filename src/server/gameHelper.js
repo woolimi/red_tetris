@@ -1,6 +1,6 @@
 const _ = require("lodash");
 
-H = {};
+const H = {};
 
 H.PLAYER_STATUS = {
 	INIT: 0,
