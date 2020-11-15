@@ -59,4 +59,22 @@ H.drawScreen = (player) => {
 	return newScreen;
 };
 
+H.calcDropTime = (players) => {
+	let totalScore = 0;
+	for (const [key, p] of players) {
+		totalScore += p.score;
+	}
+	const nbPlayers = players.size;
+	const indicator = totalScore / nbPlayers;
+	if (indicator < 100) return 1000;
+	if (indicator < 200) return 900;
+	if (indicator < 300) return 800;
+	if (indicator < 400) return 700;
+	if (indicator < 500) return 600;
+	if (indicator < 600) return 500;
+	if (indicator < 700) return 400;
+	if (indicator < 800) return 300;
+	return 200;
+};
+
 module.exports = H;

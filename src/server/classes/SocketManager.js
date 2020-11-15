@@ -78,6 +78,7 @@ class SocketManager {
 					nextPiece: player.nextPiece,
 					score: player.score,
 					isPenalty,
+					dropTime: H.calcDropTime(game.players),
 				});
 			}
 		});
@@ -185,6 +186,7 @@ class SocketManager {
 				game.isStarted = false;
 				game.winner = lastPlayer.id;
 				game.owner = game.winner;
+				game.dropTime = null;
 				return this.emit("GAME:FINISH", {
 					winner: game.winner,
 					owner: game.winner,

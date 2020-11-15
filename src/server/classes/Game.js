@@ -13,6 +13,7 @@ class Game {
 		this.owner = null;
 		this.pieceIdx = 0;
 		this.winner = null;
+		this.dropTime = null;
 	}
 
 	isAllReady() {
@@ -93,6 +94,7 @@ class Game {
 		this.winner = null;
 		this._initGamePiece();
 		this._initPlayers();
+		this.dropTime = 1000;
 	}
 
 	_initGamePiece() {

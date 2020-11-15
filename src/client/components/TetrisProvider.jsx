@@ -102,7 +102,7 @@ function reducer(tetris, action) {
 						score: action.score,
 					},
 				},
-				dropTime: 1000,
+				dropTime: action.dropTime,
 			};
 		case "PLAYER:GAMEOVER":
 			return {
