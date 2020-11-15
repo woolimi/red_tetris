@@ -7,6 +7,7 @@ const defaultState = {
 	winner: "",
 	dropTime: null,
 	isStarted: false,
+	mapIdx: 0,
 	players: {}, // id: { id, name, screen, nextPiece, status }
 };
 
@@ -30,6 +31,11 @@ function reducer(tetris, action) {
 			};
 
 		// GAME
+		case "GAME:CHANGE_MAP":
+			return {
+				...tetris,
+				mapIdx: action.mapIdx,
+			};
 		case "GAME:START":
 			H.bgmSound.play();
 			return {

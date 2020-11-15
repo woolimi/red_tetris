@@ -9,8 +9,8 @@ class Player {
 		this.id = id;
 		this.name = name;
 		this.pieceIdx = 0;
-		this.stage = H.newStage();
-		this.screen = H.newStage();
+		this.stage = H.newStage(0);
+		this.screen = H.newStage(0);
 		this.score = 0;
 		this.status = PLAYER_STATUS.INIT;
 		this.pos = { x: 0, y: 0 };
@@ -19,12 +19,12 @@ class Player {
 		this.penalty = 0;
 	}
 
-	init(pieceIdx, nextPiece) {
+	init(pieceIdx, nextPiece, mapIdx) {
 		this.status = PLAYER_STATUS.INGAME;
 		this.pieceIdx = pieceIdx;
 		this.nextPiece = nextPiece;
 		this.reset();
-		this.stage = H.newStage();
+		this.stage = H.newStage(mapIdx);
 		this.screen = H.drawScreen(this);
 	}
 

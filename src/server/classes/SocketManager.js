@@ -21,10 +21,28 @@ class SocketManager {
 		this._onGameStart();
 		this._onDisconnecting();
 		this._onChat();
+		this._onChangeMap();
 	}
 
 	emit(eventName, data) {
 		this.io.to(this.roomName).emit(eventName, data);
+	}
+
+	_onChangeMap() {
+		this.socket.on("GAME:CHANGE_MAP", ({ dir }) => {
+			const game = ROOMS.get(this.roomName);
+			if (game.owner !== this.id) return;
+			if (dir === "left") {
+				game.mapIdx -= 1;
+				if (game.mapIdx < 0) game.mapIdx = H.MAP.length - 1;
+			} else if (dir === "right") {
+				game.mapIdx += 1;
+				if (game.mapIdx >= H.MAP.length) game.mapIdx = 0;
+			}
+			this.emit("GAME:CHANGE_MAP", {
+				mapIdx: game.mapIdx,
+			});
+		});
 	}
 
 	_onChat() {

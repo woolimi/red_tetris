@@ -9,6 +9,7 @@ import { useInterval } from "../hooks/useInterval";
 import MyButton from "./MyButton";
 import { PLAYER_STATUS } from "../gameHelper";
 import _ from "lodash";
+import MapSelector from "./MapSelector";
 
 const MyTetris = ({ wrapperRef }) => {
 	const { players, owner, dropTime, isStarted } = useTetrisStore();
@@ -42,6 +43,7 @@ const MyTetris = ({ wrapperRef }) => {
 				<Grid.Column width={6}>
 					<NextPiece type={me ? me.nextPiece : ""} />
 					<Score score={me ? me.score : ""} />
+					<MapSelector isOwner={isOwner} />
 					<MyButton
 						isOwner={isOwner}
 						wrapperRef={wrapperRef}

@@ -14,6 +14,7 @@ class Game {
 		this.pieceIdx = 0;
 		this.winner = null;
 		this.dropTime = null;
+		this.mapIdx = 0;
 	}
 
 	isAllReady() {
@@ -103,7 +104,9 @@ class Game {
 
 	_initPlayers() {
 		const nextPiece = Game.pieceList[this.pieceIdx + 1];
-		_.each([...this.players], ([key, p]) => p.init(this.pieceIdx, nextPiece));
+		_.each([...this.players], ([key, p]) =>
+			p.init(this.pieceIdx, nextPiece, this.mapIdx),
+		);
 	}
 }
 

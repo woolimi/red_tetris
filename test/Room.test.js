@@ -42,7 +42,7 @@ const players = {
 		name: "wpark",
 		status: PLAYER_STATUS.INIT,
 		score: 0,
-		screen: H.newStage(),
+		screen: H.newStage(0),
 		nextPiece: "",
 	},
 	otherId: {
@@ -50,7 +50,7 @@ const players = {
 		name: "opponent",
 		status: PLAYER_STATUS.INIT,
 		score: 0,
-		screen: H.newStage(),
+		screen: H.newStage(0),
 		nextPiece: "",
 	},
 };

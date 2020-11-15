@@ -14,6 +14,9 @@ export function useSocketEvent(socket, tetrisDispatch, roomName, userName) {
 		});
 
 		// GAME
+		socket.on("GAME:CHANGE_MAP", (data) => {
+			tetrisDispatch({ type: "GAME:CHANGE_MAP", ...data });
+		});
 		socket.on("GAME:START", (data) => {
 			tetrisDispatch({ type: "GAME:START", ...data });
 		});
