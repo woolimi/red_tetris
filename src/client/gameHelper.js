@@ -1,4 +1,8 @@
 import _ from "lodash";
+import BgmSound from "./sound/bgm.mp3";
+import FallSound from "./sound/fall.wav";
+import GameoverSound from "./sound/gameover.wav";
+import PenaltySound from "./sound/penalty.wav";
 
 export const SERVER = "http://localhost:5000";
 export const WIDTH = 10;
@@ -11,6 +15,63 @@ export const PLAYER_STATUS = {
 };
 
 const H = {};
+
+const bs = new Audio(BgmSound);
+const gos = new Audio(GameoverSound);
+const fs = new Audio(FallSound);
+const ps = new Audio(PenaltySound);
+
+bs.loop = true;
+
+H.bgmSound = {
+	play: () => {
+		bs.pause();
+		bs.currentTime = 0;
+		bs.play();
+	},
+	stop: () => {
+		bs.pause();
+	},
+};
+
+H.gameoverSound = {
+	play: () => {
+		gos.pause();
+		gos.play();
+	},
+	stop: () => {
+		gos.pause();
+	},
+};
+
+H.fallSound = {
+	play: () => {
+		fs.pause();
+		fs.currentTime = 0;
+		fs.play();
+	},
+	stop: () => {
+		fs.pause();
+	},
+};
+
+H.penaltySound = {
+	play: () => {
+		ps.pause();
+		ps.currentTime = 0;
+		ps.play();
+	},
+	stop: () => {
+		ps.pause();
+	},
+};
+
+H.offSound = () => {
+	H.bgmSound.stop();
+	H.gameoverSound.stop();
+	H.fallSound.stop();
+	H.penaltySound.stop();
+};
 
 H.newStage = () => {
 	return Array.from(Array(HEIGHT + 1), () => new Array(WIDTH).fill(0));

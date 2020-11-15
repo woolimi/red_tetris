@@ -12,6 +12,7 @@ import OthersTetris from "./OthersTetris";
 import Chat from "./Chat";
 import styled from "styled-components";
 import { Dimmer, Loader } from "semantic-ui-react";
+import H from "../gameHelper";
 
 const Wrapper = styled.div`
 	width: 100vw;
@@ -64,6 +65,7 @@ const Room = ({ history, match }) => {
 					socket.emit("PLAYER:DROPDOWN", {
 						type: "DROP",
 					});
+					H.fallSound.play();
 					tetrisDispatch({ type: "GAME:DROPTIME", dropTime: null });
 					e.preventDefault();
 					break;

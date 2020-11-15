@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useContext, useState } from "react";
 import io from "socket.io-client";
-import { PLAYER_STATUS, SERVER } from "../gameHelper";
+import H, { PLAYER_STATUS, SERVER } from "../gameHelper";
 
 const defaultState = {
 	owner: "",
@@ -31,6 +31,7 @@ function reducer(tetris, action) {
 
 		// GAME
 		case "GAME:START":
+			H.bgmSound.play();
 			return {
 				...tetris,
 				players: action.players,
@@ -44,6 +45,8 @@ function reducer(tetris, action) {
 				dropTime: action.dropTime,
 			};
 		case "GAME:FINISH":
+			H.bgmSound.stop();
+			H.gameoverSound.play();
 			return {
 				...tetris,
 				winner: action.winner,

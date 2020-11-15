@@ -53,7 +53,7 @@
 		"concurrently": "^5.3.0",
 		"css-loader": "^5.0.0",
 		"error-overlay-webpack-plugin": "^0.4.1",
-		"file-loader": "^6.1.1",
+		"file-loader": "^6.2.0",
 		"html-webpack-plugin": "^4.5.0",
 		"jest": "^26.6.1",
 		"jest-fetch-mock": "^3.0.3",
@@ -78,6 +78,13 @@
 		],
 		"moduleDirectories": [
 			"node_modules"
+		],
+		"moduleNameMapper": {
+			"\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/__mocks__/fileMock.js",
+			"\\.(css|less)$": "<rootDir>/test/__mocks__/fileMock.js"
+		},
+		"setupFiles": [
+			"<rootDir>/test/setup.js"
 		],
 		"collectCoverage": true,
 		"coverageThreshold": {

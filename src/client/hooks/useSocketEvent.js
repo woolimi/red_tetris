@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import H from "../gameHelper";
 
 export function useSocketEvent(socket, tetrisDispatch, roomName, userName) {
 	useEffect(() => {
@@ -37,6 +38,7 @@ export function useSocketEvent(socket, tetrisDispatch, roomName, userName) {
 			tetrisDispatch({ type: "PLAYER:ROTATE", ...data });
 		});
 		socket.on("PLAYER:DROPDOWN", (data) => {
+			if (data.isPenalty && data.id === socket.id) H.penaltySound.play();
 			tetrisDispatch({ type: "PLAYER:DROPDOWN", ...data });
 		});
 	}, [roomName, userName]);

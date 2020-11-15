@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SERVER } from "../gameHelper";
+import H, { SERVER } from "../gameHelper";
 
 const _check_room = async (roomName, userName, history, socket) => {
 	const res = await fetch(
@@ -23,6 +23,7 @@ export function useCheckRoom(roomName, userName, history, socket) {
 	useEffect(() => {
 		_check_room(roomName, userName, history, socket);
 		return () => {
+			H.offSound();
 			return socket && socket.close();
 		};
 	}, [roomName, userName, socket]);

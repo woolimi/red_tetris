@@ -52,7 +52,9 @@ class SocketManager {
 			if (!game.isStarted) return;
 
 			const player = game.findPlayerById(this.id);
+			const isPenalty = player.penalty ? true : false;
 			const lines = type === "DOWN" ? player.down() : player.drop();
+
 			if (lines > 1) game.addPenaltyToOthers(player.id, lines - 1);
 			player.screen = H.drawScreen(player);
 
@@ -66,7 +68,6 @@ class SocketManager {
 					isStarted: game.isStarted,
 				});
 			} else if (player.status === PLAYER_STATUS.GAMEOVER) {
-				console.log("PLAYER:GAMEOVER");
 				this.emit("PLAYER:GAMEOVER", {
 					id: this.id,
 				});
@@ -76,6 +77,7 @@ class SocketManager {
 					screen: player.screen,
 					nextPiece: player.nextPiece,
 					score: player.score,
+					isPenalty,
 				});
 			}
 		});
@@ -159,8 +161,6 @@ class SocketManager {
 
 	_onDisconnecting() {
 		this.socket.on("disconnecting", () => {
-			console.log(`disconnecting ${this.id}`);
-
 			const game = ROOMS.get(this.roomName);
 			if (!game) return;
 
