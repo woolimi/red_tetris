@@ -8,9 +8,9 @@ const MapSelector = ({ isOwner }) => {
 	const { mapIdx, isStarted } = useTetrisStore();
 	let mapName = useMemo(() => {
 		if (mapIdx === 0) return "basic";
-		if (mapIdx === 1) return "heart";
-		if (mapIdx === 2) return "zigzag";
-		if (mapIdx === 3) return "tree";
+		else if (mapIdx === 1) return "heart";
+		else if (mapIdx === 2) return "zigzag";
+		else if (mapIdx === 3) return "tree";
 	}, [mapIdx]);
 
 	const changeMap = useCallback((e) => {

@@ -1,4 +1,4 @@
-const { ROOMS } = require("../Rooms");
+const { ROOMS } = require("../ROOMS");
 const H = require("../gameHelper");
 const { PLAYER_STATUS } = H;
 const Player = require("./Player");

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { ROOMS } = require("./Rooms");
+const { ROOMS } = require("./ROOMS");
 const Game = require("./classes/Game");
 
 router.post("/room", (req, res) => {
@@ -27,7 +27,7 @@ router.get("/room", (req, res) => {
 		return res.status(403).json({ error: `Room(${roomName}) doesn't exist` });
 	const game = ROOMS.get(roomName);
 	if (game.players.size >= 3)
-		return res.status(403).json({ access: false, error: "Room is full." });
+		return res.status(403).json({ error: "Room is full." });
 	if (game.findPlayerByName(userName))
 		return res
 			.status(403)

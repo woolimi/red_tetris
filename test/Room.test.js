@@ -129,6 +129,9 @@ describe("<Room />", () => {
 			socket.socketClient.emit("ROOM:OWNER", {
 				owner: "myId",
 			});
+			socket.socketClient.emit("GAME:CHANGE_MAP", {
+				mapIdx: 1,
+			});
 
 			// OTHER PLAYER READY
 			socket.socketClient.emit("PLAYER:READY", {

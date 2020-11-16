@@ -18,7 +18,7 @@ describe("Player", () => {
 	});
 	it("create new stage and screen after init()", () => {
 		const { stage, screen } = p;
-		p.init(0, "T");
+		p.init(0, "T", 0);
 		expect(stage).not.toBe(p.stage);
 		expect(screen).not.toBe(p.screen);
 	});

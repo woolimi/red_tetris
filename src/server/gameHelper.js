@@ -33,7 +33,7 @@ H.drawScreen = (player) => {
 	const newScreen = _.cloneDeep(stage);
 	const spos = { ...pos };
 
-	if (player.status === H.PLAYER_STATUS.GAMEOVER) {
+	if (player.status !== H.PLAYER_STATUS.INGAME) {
 		return newScreen;
 	}
 
