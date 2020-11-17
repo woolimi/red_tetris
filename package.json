@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"dev-build": "webpack  --env.API=http://localhost:5000",
-		"build": "webpack --env.API='/' --mode production",
+		"build": "webpack --env.API=https://wpark-red-tetris.herokuapp.com --mode production",
 		"start": "node src/server/index.js",
 		"client": "webpack-dev-server --hot --env.API=http://localhost:5000",
 		"server": "nodemon src/server/index.js",
