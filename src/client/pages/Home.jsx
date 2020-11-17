@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Message, Button, Form, Grid, Input } from "semantic-ui-react";
+import { API } from "../gameHelper";
 
 const Home = ({ history }) => {
 	const [inputs, setInputs] = useState({
@@ -22,7 +23,7 @@ const Home = ({ history }) => {
 		try {
 			if (!roomName || !userName)
 				throw Error("Please type room name and user name");
-			const res = await fetch(`http://localhost:5000/api/room`, {
+			const res = await fetch(`${API}/api/room`, {
 				method: "POST",
 				body: JSON.stringify({ roomName, userName }),
 				headers: {
