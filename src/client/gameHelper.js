@@ -20,14 +20,18 @@ const bs = new Audio(BgmSound);
 const gos = new Audio(GameoverSound);
 const fs = new Audio(FallSound);
 const ps = new Audio(PenaltySound);
+let bsPromise;
+let gosPromise;
+let fsPromise;
+let psPromise;
 
 bs.loop = true;
 
 H.bgmSound = {
-	play: () => {
-		bs.pause();
+	play: async () => {
+		if (bsPromise) bs.pause();
 		bs.currentTime = 0;
-		bs.play();
+		bsPromise = await bs.play();
 	},
 	stop: () => {
 		bs.pause();
@@ -35,9 +39,10 @@ H.bgmSound = {
 };
 
 H.gameoverSound = {
-	play: () => {
-		gos.pause();
-		gos.play();
+	play: async () => {
+		if (gosPromise) gos.pause();
+		gos.currentTime = 0;
+		gosPromise = await gos.play();
 	},
 	stop: () => {
 		gos.pause();
@@ -45,10 +50,10 @@ H.gameoverSound = {
 };
 
 H.fallSound = {
-	play: () => {
-		fs.pause();
+	play: async () => {
+		if (fsPromise) fs.pause();
 		fs.currentTime = 0;
-		fs.play();
+		fsPromise = await fs.play();
 	},
 	stop: () => {
 		fs.pause();
@@ -56,10 +61,10 @@ H.fallSound = {
 };
 
 H.penaltySound = {
-	play: () => {
-		ps.pause();
+	play: async () => {
+		if (psPromise) ps.pause();
 		ps.currentTime = 0;
-		ps.play();
+		psPromise = await ps.play();
 	},
 	stop: () => {
 		ps.pause();

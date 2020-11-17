@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const apiRouter = require("./api");
 const corsOptions = {
-	origin: process.env.DOMAIN || "http://localhost:8080",
+	origin: "http://localhost:8080",
 };
 const SocketManager = require("./classes/SocketManager");
 

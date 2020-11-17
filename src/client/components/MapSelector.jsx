@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import StyledDisplay from "./style/StyledDisplay";
-import { Button, Container } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { useTetrisStore, useSocketStore } from "./TetrisProvider";
 
 const MapSelector = ({ isOwner }) => {
