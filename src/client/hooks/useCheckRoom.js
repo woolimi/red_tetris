@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import H, { SERVER } from "../gameHelper";
+import H, { API } from "../gameHelper";
 
 const _check_room = async (roomName, userName, history, socket) => {
 	const res = await fetch(
-		`${SERVER}/api/room?roomName=${roomName}&userName=${userName}`,
+		`${API}/api/room?roomName=${roomName}&userName=${userName}`,
 		{ method: "GET" },
 	);
 	const { error } = await res.json();

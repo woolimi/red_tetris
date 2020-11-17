@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useContext, useState } from "react";
 import io from "socket.io-client";
-import H, { PLAYER_STATUS, SERVER } from "../gameHelper";
+import H, { PLAYER_STATUS, API } from "../gameHelper";
 
 const defaultState = {
 	owner: "",
@@ -132,7 +132,7 @@ function reducer(tetris, action) {
 }
 
 export function SocketProvider({ children }) {
-	const defaultSocket = io.connect(`${SERVER}`, {
+	const defaultSocket = io.connect(`${API}`, {
 		path: "/socket",
 		transports: ["websocket"],
 	});

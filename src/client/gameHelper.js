@@ -4,7 +4,7 @@ import FallSound from "./sound/fall.wav";
 import GameoverSound from "./sound/gameover.wav";
 import PenaltySound from "./sound/penalty.wav";
 
-export const SERVER = "http://localhost:5000";
+export const API = process.env.API;
 export const WIDTH = 10;
 export const HEIGHT = 20;
 export const PLAYER_STATUS = {
