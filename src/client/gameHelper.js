@@ -16,58 +16,57 @@ export const PLAYER_STATUS = {
 
 const H = {};
 
-const bs = new Audio(BgmSound);
-const gos = new Audio(GameoverSound);
-const fs = new Audio(FallSound);
-const ps = new Audio(PenaltySound);
-let bsPromise;
-let gosPromise;
-let fsPromise;
-let psPromise;
-
-bs.loop = true;
+H.bs = new Audio(BgmSound);
+H.bs.loop = true;
+H.gos = new Audio(GameoverSound);
+H.fs = new Audio(FallSound);
+H.ps = new Audio(PenaltySound);
+H.bsPromise = null;
+H.gosPromise = null;
+H.fsPromise = null;
+H.psPromise = null;
 
 H.bgmSound = {
 	play: async () => {
-		if (bsPromise) bs.pause();
-		bs.currentTime = 0;
-		bsPromise = await bs.play();
+		if (H.bsPromise) H.bs.pause();
+		H.bs.currentTime = 0;
+		H.bsPromise = await H.bs.play();
 	},
 	stop: () => {
-		bs.pause();
+		H.bs.pause();
 	},
 };
 
 H.gameoverSound = {
 	play: async () => {
-		if (gosPromise) gos.pause();
-		gos.currentTime = 0;
-		gosPromise = await gos.play();
+		if (H.gosPromise) H.gos.pause();
+		H.gos.currentTime = 0;
+		H.gosPromise = await H.gos.play();
 	},
 	stop: () => {
-		gos.pause();
+		H.gos.pause();
 	},
 };
 
 H.fallSound = {
 	play: async () => {
-		if (fsPromise) fs.pause();
-		fs.currentTime = 0;
-		fsPromise = await fs.play();
+		if (H.fsPromise) H.fs.pause();
+		H.fs.currentTime = 0;
+		H.fsPromise = await H.fs.play();
 	},
 	stop: () => {
-		fs.pause();
+		H.fs.pause();
 	},
 };
 
 H.penaltySound = {
 	play: async () => {
-		if (psPromise) ps.pause();
-		ps.currentTime = 0;
-		psPromise = await ps.play();
+		if (H.psPromise) H.ps.pause();
+		H.ps.currentTime = 0;
+		H.psPromise = await H.ps.play();
 	},
 	stop: () => {
-		ps.pause();
+		H.ps.pause();
 	},
 };
 
