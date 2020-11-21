@@ -26,6 +26,7 @@ class Player {
 		this.reset();
 		this.stage = H.newStage(mapIdx);
 		this.screen = H.drawScreen(this);
+		this.score = 0;
 	}
 
 	// remove prev piece => add new piece
