@@ -18,6 +18,7 @@ const H = {};
 
 H.bs = new Audio(BgmSound);
 H.bs.loop = true;
+H.bs.volume = 0.1;
 H.gos = new Audio(GameoverSound);
 H.fs = new Audio(FallSound);
 H.ps = new Audio(PenaltySound);
