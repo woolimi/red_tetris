@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-	// console.log(`connection "${socket.id}" connected`);
 	const socketManager = new SocketManager(io, socket);
 	socketManager.on();
 });

@@ -23,6 +23,7 @@ function reducer(tetris, action) {
 				...tetris,
 				winner: action.winner,
 				players: action.players,
+				isStarted: action.isStarted,
 			};
 		case "ROOM:OWNER":
 			return {
@@ -132,11 +133,10 @@ function reducer(tetris, action) {
 }
 
 export function SocketProvider({ children }) {
-	const defaultSocket = io.connect(`${API}`, {
+	const socket = io.connect(`${API}`, {
 		path: "/socket",
 		transports: ["websocket"],
 	});
-	const [socket] = useState(defaultSocket);
 	return (
 		<SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
 	);

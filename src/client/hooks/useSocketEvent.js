@@ -3,7 +3,7 @@ import H from "../gameHelper";
 
 export function useSocketEvent(socket, tetrisDispatch, roomName, userName) {
 	useEffect(() => {
-		if (!socket) throw Error("socket connection error");
+		if (!socket) console.error("socket error");
 
 		// ROOM
 		socket.on("ROOM:PLAYERS", (data) => {
