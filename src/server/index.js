@@ -11,6 +11,10 @@ const corsOptions = {
 };
 const SocketManager = require("./classes/SocketManager");
 
+if (process.env.MODE === "prod") {
+	global.console.log = function () {};
+}
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

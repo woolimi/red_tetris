@@ -170,7 +170,8 @@ class SocketManager {
 			this.socket.join(roomName);
 			this.roomName = roomName;
 			game.addPlayer(player);
-			console.log("add player", game.isStarted);
+
+			console.log("ADD_PLAYER", ROOMS);
 
 			this.emit("ROOM:PLAYERS", {
 				winner: game.winner,
@@ -195,12 +196,13 @@ class SocketManager {
 
 		game.removePlayerById(this.id);
 		this.socket.leave(this.roomName);
-		console.log("quit");
 
 		if (game.players.size === 0) {
 			ROOMS.delete(this.roomName);
+			console.log("REMOVE_PLAYER", ROOMS);
 			return;
 		}
+		console.log("REMOVE_PLAYER", ROOMS);
 
 		// someone quit during game
 		if (game.isStarted && game.players.size === 1) {
