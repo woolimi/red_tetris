@@ -1,7 +1,6 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env) => {
 	const envKeys = Object.keys(env).reduce((prev, next) => {
@@ -11,12 +10,8 @@ module.exports = (env) => {
 
 	return {
 		name: "red-tetris",
-		mode: "production",
-		optimization: {
-			minimize: true,
-			minimizer: [new TerserPlugin()],
-		},
-		devtool: "nosources-source-map",
+		mode: "development",
+		devtool: "eval-cheap-source-map",
 		resolve: {
 			extensions: ["*", ".js", ".jsx"],
 		},
