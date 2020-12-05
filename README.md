@@ -4,6 +4,10 @@
 <img src="./preview.gif" alt="presentation ft_linear_regression"/>
 </kbd>
 
+## Demo
+
+[wpark-red-tetris.herokuapp.com](https://wpark-red-tetris.herokuapp.com/)
+
 ## Overview
 
 Everyone says they know Javascript, but very few people have a really precise knowledge of this multi-faceted language which is at the same time partially functional, completely prototype oriented, of a diabolically dynamic type, passionately asynchronous and frighteningly efficient.
@@ -23,10 +27,6 @@ of branches
 - Jest (unit test) & React-testing-library
 - webpack
 
-## Demo
-
-[wpark-red-tetris.herokuapp.com](https://wpark-red-tetris.herokuapp.com/)
-
 ## How to play in local
 
 ```
@@ -34,4 +34,10 @@ of branches
 > cd red_tetris
 > npm run dev:build
 > npm run start
+```
+
+## Test coverage
+
+```
+> npm run coverage
 ```
