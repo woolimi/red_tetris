@@ -10,7 +10,7 @@ const config = {
 module.exports = (env) => {
   if (env === "hotdev" || env === "dev" || env === "prod") {
     if (env === "dev" || env === "hotdev") config.API = `http://localhost:${process.env.PORT}`;
-    if (env === "prod") config.API = "https://red-tetris-woolimi.koyeb.app";
+    if (env === "prod") config.API = process.env.DOMAIN;
 
     if (env === "hotdev") return require(`./config/webpack.config.dev.js`)(config);
     if (env === "prod" || env === "dev") return require(`./config/webpack.config.prod.js`)(config);
