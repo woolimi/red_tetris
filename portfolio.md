@@ -15,4 +15,4 @@ of branches</b>
 
 ## Demo
 
-[wpark-red-tetris.herokuapp.com](https://wpark-red-tetris.herokuapp.com/)
+[wpark-red-tetris.herokuapp.com](https://red-tetris-woolimi.koyeb.app/)
