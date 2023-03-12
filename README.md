@@ -6,7 +6,7 @@
 
 ## Demo
 
-[wpark-red-tetris.herokuapp.com](https://red-tetris-woolimi.koyeb.app/)
+[https://red-tetris-woolimi.koyeb.app/](https://red-tetris-woolimi.koyeb.app/)
 
 ## Overview
 
